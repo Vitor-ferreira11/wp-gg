@@ -1,5 +1,28 @@
 # Revisão do WP.GG — 14/10/2026
 
+## Encerramento — versão 1.0.0
+
+As pendências descritas nos registros históricos abaixo foram concluídas. Início e perfil real foram verificados com largura efetiva de 390, 768, 1024, 1280 e 1920 pixels, sem transbordamento ou cartões cortados. A expansão das equipes por Enter mostrou dez jogadores no celular. O filtro respondeu pelo teclado com foco visível. As verificações pontuais de contraste dos textos e controles principais resultaram entre 5,05:1 e 15,22:1. O escopo é uma revisão funcional e visual do MVP, não uma certificação completa de acessibilidade. Consulte `CHANGELOG.md` para o estado final e as limitações preservadas.
+
+## Conferência final realizada após o primeiro envio ao GitHub
+
+- 25 testes passaram nesta rodada, sem falhas.
+- Demonstração, catálogo e página da Jinx conferidos em 390, 768, 1024, 1280 e 1920 pixels, sem transbordamento horizontal da página. O perfil real e a página inicial foram conferidos em 1280 pixels; tentativas de redimensionar essas abas não mudaram a largura efetiva, portanto não contam como validação adicional.
+- GoBacck carregou com dados reais. Outro jogador, Niloyv Zoklev, abriu pelo link da equipe e também carregou.
+- Repetir a busca do mesmo perfil não deixou o botão bloqueado após concluir a navegação.
+- Riot ID sem tag mostrou validação. Um Riot ID de teste inexistente mostrou “Não encontramos esse jogador” e ofereceu acesso à demonstração.
+- Filtro ARAM exibiu quatro partidas na demonstração. No histórico real de GoBacck, o mesmo filtro exibiu o estado vazio esperado. Retornar a todos os modos restaurou o histórico.
+- Expandir uma partida real e uma fictícia mostrou dez jogadores.
+- Busca de campeão inexistente exibiu estado vazio; limpar filtros e buscar Jinx permitiu abrir sua página.
+- Conferido foco visível em link com Tab. Isso é uma checagem básica de teclado, não uma auditoria completa de acessibilidade ou de contraste.
+- Não foram encontradas falhas bloqueadoras nesses fluxos. Os testes de chave ausente/expirada, limite da API e perfil sem partidas continuam automatizados, com respostas simuladas; não foi alterada a chave real para provocar erros.
+
+O modo de demonstração e o repositório privado, citados como pendências no registro inicial abaixo, já foram concluídos. Antes de chamar esta versão de v1.0, resta conferir visualmente o início e o perfil real nas demais larguras, além de uma revisão de contraste e teclado mais completa. Hospedagem permanece uma etapa separada.
+
+---
+
+## Registro da revisão inicial
+
 ## Resultado verificado
 
 - 23 testes automatizados passaram, sem falhas.

@@ -2,6 +2,8 @@
 
 **Well Played. Seu desempenho, com clareza.**
 
+Versão **1.0.0** — MVP local concluído. Confira as funcionalidades e verificações no [histórico da versão](CHANGELOG.md). A hospedagem ainda não foi realizada.
+
 MVP de portfólio para explorar perfis de League of Legends, classificação, últimas partidas e campeões. Construído com **Next.js, TypeScript, Tailwind CSS e SQLite**, com integração server-side à Riot API e imagens oficiais do Data Dragon.
 
 ![Perfil de demonstração do WP.GG](docs/images/demonstracao.jpg)
