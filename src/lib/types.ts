@@ -1,0 +1,8 @@
+export type Account = { puuid: string; gameName: string; tagLine: string };
+export type Summoner = { profileIconId: number; summonerLevel: number };
+export type PlayerLoadout = { summoner1Id?: number; summoner2Id?: number; perks?: { styles: { style: number; selections: { perk: number }[] }[]; statPerks: { offense: number; flex: number; defense: number } } };
+export type League = { queueType: string; tier: string; rank: string; leaguePoints: number; wins: number; losses: number };
+export type Participant = { puuid: string; riotIdGameName?: string; riotIdTagline?: string; teamId?: number; champLevel?: number; goldEarned?: number; championName: string; championId: number; kills: number; deaths: number; assists: number; win: boolean; totalMinionsKilled: number; neutralMinionsKilled: number; totalDamageDealtToChampions: number; visionScore: number; teamPosition: string; item0: number; item1: number; item2: number; item3: number; item4: number; item5: number; item6: number };
+export type Match = { metadata: { matchId: string }; info: { gameVersion?: string; teams?: { bans: { championId: number; pickTurn: number }[] }[]; gameDuration: number; gameEndTimestamp: number; queueId: number; participants: (Participant & PlayerLoadout)[] } };
+export type Champion = { id: string; key: string; name: string; title?: string; tags?: string[]; blurb?: string; info?: { attack: number; defense: number; magic: number; difficulty: number }; image: { full: string } };
+export type Profile = { account: Account; summoner: Summoner; leagues: League[]; matches: Match[]; version: string; champions: Record<string, Champion>; missingMatches: number; rankHistory: import('./rank-history').RankHistory };
