@@ -2,7 +2,11 @@
 
 **Well Played. Seu desempenho, com clareza.**
 
-Versão **1.0.0** — MVP local concluído. Confira as funcionalidades e verificações no [histórico da versão](CHANGELOG.md). A hospedagem ainda não foi realizada.
+Versão **1.0.0** — MVP concluído, com demonstração pública hospedada na Vercel Hobby. Confira as funcionalidades e verificações no [histórico da versão](CHANGELOG.md).
+
+**Site:** https://wp-gg.vercel.app · **Demonstração:** https://wp-gg.vercel.app/demo
+
+A versão pública usa dados fictícios identificados, sem consultas à Riot API e sem SQLite. Busca de jogadores reais e coleta local permanecem disponíveis ao executar o projeto localmente com chave válida e modo demonstrativo desativado.
 
 MVP de portfólio para explorar perfis de League of Legends, classificação, últimas partidas e campeões. Construído com **Next.js, TypeScript, Tailwind CSS e SQLite**, com integração server-side à Riot API e imagens oficiais do Data Dragon.
 
@@ -10,7 +14,7 @@ MVP de portfólio para explorar perfis de League of Legends, classificação, ú
 
 ### Experimente sem chave Riot
 
-Depois de iniciar o projeto, abra [a demonstração local](http://localhost:3000/demo). O perfil fictício tem 20 partidas, gráfico de vitórias, filtros por modo e detalhes dos dez jogadores. As imagens precisam de internet. A porta padrão é 3000; se iniciar com `pnpm dev --port 3001`, use `http://localhost:3001/demo`.
+Abra [a demonstração pública](https://wp-gg.vercel.app/demo), sem instalação ou chave Riot. O perfil fictício tem 20 partidas, gráfico de vitórias, filtros por modo e detalhes dos dez jogadores. As imagens precisam de internet. Para executar localmente, a porta padrão é 3000; se iniciar com `pnpm dev --port 3001`, use `http://localhost:3001/demo`.
 
 ### Principais recursos
 
@@ -140,7 +144,7 @@ O modo público substitui a busca por um acesso à demonstração, usa o perfil 
 
 Para publicar na Vercel Hobby: importe o repositório, mantenha o framework Next.js, use Node.js 24, instalação `pnpm install --frozen-lockfile` e build `pnpm build`. Não configure `WP_BUILD_DIR`, pois a saída normal é `.next`. Não envie `.env.local` nem arquivos SQLite. Em outro provedor, defina explicitamente `WP_DEMO_ONLY=true`. Mudanças de modo exigem reinício local ou novo build/deploy na hospedagem, pois a página inicial pode ser pré-renderizada.
 
-Não foi realizado deploy nesta etapa. Consultas reais públicas permanecem uma etapa futura: aprovação apropriada da Riot, controle compartilhado de requisições e revisão deliberada do bloqueio na Vercel.
+Publicado em https://wp-gg.vercel.app em 16/10/2026, no plano Hobby. Foram conferidos início, demonstração, filtro ARAM, detalhes dos dez jogadores, bloqueio de perfil real e aviso de persistência desativada na página de campeão. Consultas reais públicas permanecem uma etapa futura: aprovação apropriada da Riot, controle compartilhado de requisições e revisão deliberada do bloqueio na Vercel.
 
 ## Configuração da persistência
 
