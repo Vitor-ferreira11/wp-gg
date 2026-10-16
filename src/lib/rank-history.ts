@@ -3,6 +3,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import type { League } from './types';
+import { persistenceEnabled } from './persistence';
 
 export type RankSnapshot = { day: string; observedAt: string; queueType: string; tier: string | null; rank: string | null; leaguePoints: number | null; wins: number | null; losses: number | null };
 export type RankHistory = { snapshots: RankSnapshot[]; unavailable: boolean };
@@ -11,6 +12,7 @@ export function historyDay(date: Date) {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
 }
 export function recordRankHistory(puuid: string, platform: string, leagues: League[], now = new Date(), path = process.env.WP_DATABASE_PATH || resolve(process.cwd(), '.data/wp-gg.sqlite')): RankSnapshot[] {
+  if (!persistenceEnabled()) return [];
   // Arquivo criado em runtime; não deve integrar o pacote de publicação.
   mkdirSync(dirname(resolve(/* turbopackIgnore: true */ path)), { recursive: true });
   const db = new DatabaseSync(path);

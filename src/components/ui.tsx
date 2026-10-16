@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { SiteNav } from './site-nav';
+import { demoOnly } from '@/lib/public-mode';
 
 export function Header() {
   return <header className="header site-header"><div className="header-inner">
     <Link href="/" className="brand" aria-label="WP.GG — Well Played, início"><span className="wordmark">WP<span>.GG</span></span><span className="brand-name">Well Played</span></Link>
     <span className="header-game">League of Legends</span><span className="header-tagline">Seu jogo, com clareza.</span>
-  </div><SiteNav/></header>;
+  </div><SiteNav demoOnly={demoOnly()}/></header>;
 }
 export function Footer() {
   return <footer className="footer site-footer"><div className="footer-inner"><div><span className="footer-brand">WP<span>.GG</span></span><p>Well Played · Bem jogado.</p></div><p>WP.GG is not endorsed by Riot Games and does not reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games and all associated properties are trademarks or registered trademarks of Riot Games, Inc.</p></div></footer>;

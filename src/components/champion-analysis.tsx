@@ -8,7 +8,7 @@ import type { Champion } from '@/lib/types';
 
 const percent = (wins:number,games:number) => games ? `${(wins/games*100).toFixed(1)}%` : '—';
 const shards: Record<number,string> = {5008:'Força adaptativa',5005:'Velocidade de ataque',5007:'Aceleração de habilidade',5001:'Vida',5002:'Armadura',5003:'Resistência mágica'};
-export function ChampionAnalysis({ samples, championId, champions, version, assets, unavailable }: { samples: ChampionSample[]; championId: number; champions: Champion[]; version: string; assets: AnalysisAssets | null; unavailable: boolean }) {
+export function ChampionAnalysis({ samples, championId, champions, version, assets, unavailable, disabled = false }: { samples: ChampionSample[]; championId: number; champions: Champion[]; version: string; assets: AnalysisAssets | null; unavailable: boolean; disabled?: boolean }) {
   const [position,setPosition] = useState('ALL');
   const [queue,setQueue] = useState('ALL');
   const [patch,setPatch] = useState('ALL');
@@ -30,6 +30,7 @@ export function ChampionAnalysis({ samples, championId, champions, version, asse
     const c=champMap.get(row.value);
     return <div key={row.value} className="matchup-row">{c?<Link href={`/campeoes/${c.id}`} className="matchup-name"><Image src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${c.image.full}`} alt="" width={34} height={34}/><span>{c.name}</span></Link>:<span>Campeão {row.value}</span>}<div><strong>{percent(row.wins,row.games)}</strong><small>{row.games} jogos · {row.wins} vitórias</small></div></div>;
   }) : <p className="analysis-empty">Nenhuma observação com posição e time disponíveis.</p>;
+  if (disabled) return <section className="champion-analysis" aria-labelledby="analysis-title"><h2 id="analysis-title">Análise do campeão</h2><p className="sample-notice">Estatísticas acumuladas desativadas neste ambiente. Habilidades, atributos e skins continuam disponíveis pelo Data Dragon. Perfis e partidas recentes não dependem deste armazenamento.</p></section>;
   return <section className="champion-analysis" aria-labelledby="analysis-title">
     <div className="section-heading"><div><h2 id="analysis-title">Análise do campeão</h2><p className="muted">Escolhas observadas nas partidas coletadas. Amostras pequenas não são recomendações.</p></div></div>
     <div className="analysis-filters"><label>Posição<select value={position} onChange={e=>setPosition(e.target.value)}>{[['ALL','Todas'],['TOP','Topo'],['JUNGLE','Selva'],['MIDDLE','Meio'],['BOTTOM','Atirador'],['UTILITY','Suporte']].map(([id,name])=><option key={id} value={id}>{name}</option>)}</select></label><label>Fila<select value={queue} onChange={e=>setQueue(e.target.value)}><option value="ALL">Solo/Duo + Flex</option><option value="420">Solo / Duo</option><option value="440">Flex</option></select></label><label>Patch das partidas<select value={patch} onChange={e=>setPatch(e.target.value)}><option value="ALL">Todos os coletados</option>{patches.map(p=><option key={p}>{p}</option>)}</select></label><span className="analysis-total">{data.games} jogos · {percent(data.wins,data.games)} de vitória</span></div>

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ProfileView } from '@/components/profile-view';
+import { demoOnly } from '@/lib/public-mode';
 import { Notice } from '@/components/ui';
 import { getProfile, RiotError } from '@/lib/riot';
 import { isPlatform, parseRiotId, platforms, decodeRouteRiotId } from '@/lib/stats';
@@ -12,6 +13,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ platfo
   const { platform, riotId: routeId } = await params;
   const riotId = decodeRouteRiotId(routeId);
   if (!isPlatform(platform)) notFound();
+  if (demoOnly()) return <main id="conteudo"><Notice title="Consultas reais desativadas"><p>Esta versão de portfólio usa dados fictícios. Nenhuma consulta deste jogador foi enviada à Riot.</p><Link href="/demo" className="demo-error-link">Explorar demonstração →</Link></Notice></main>;
   try { parseRiotId(riotId); }
   catch { return <main id="conteudo"><Notice title="Riot ID inválido">Use o formato Nome#TAG.</Notice></main>; }
   let data;

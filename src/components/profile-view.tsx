@@ -11,13 +11,15 @@ import { ChampionRelations } from '@/components/champion-relations';
 import { asset } from '@/lib/riot';
 import { aggregate, platforms, type Platform } from '@/lib/stats';
 import type { Profile } from '@/lib/types';
+import { demoOnly } from '@/lib/public-mode';
 
 export function ProfileView({ data, platform, demo = false }: { data: Profile; platform: Platform; demo?: boolean }) {
+  const publicDemo = demoOnly();
   const stats = aggregate(data.matches, data.account.puuid);
   const favorite = Object.values(data.champions).find(champion => Number(champion.key) === stats.champions[0]?.id);
   return <main id="conteudo" className="profile-main">
-    {demo && <aside className="demo-banner" aria-label="Modo de demonstração"><div><strong>Modo de demonstração</strong><p>Perfil e partidas fictícios para explorar o WP.GG. Estes resultados não pertencem a um jogador real.</p></div><Link href="/">Buscar jogador real →</Link></aside>}
-    <div className="profile-search"><Link className="back-link" href="/"><ArrowLeft size={17}/> Nova busca</Link><SearchForm compact/></div>
+    {demo && <aside className="demo-banner" aria-label="Modo de demonstração"><div><strong>Modo de demonstração</strong><p>Perfil e partidas fictícios para explorar o WP.GG. Estes resultados não pertencem a um jogador real.</p></div><Link href="/">{publicDemo ? 'Voltar ao início →' : 'Buscar jogador real →'}</Link></aside>}
+    <div className="profile-search"><Link className="back-link" href="/"><ArrowLeft size={17}/> {publicDemo ? 'Início' : 'Nova busca'}</Link><SearchForm compact demoOnly={publicDemo}/></div>
     <section className="profile-header" aria-label="Jogador">
       <Image className="avatar" src={asset(data.version,'profileicon',data.summoner.profileIconId)} alt="Ícone do jogador" width={80} height={80}/>
       <div><p className="eyebrow">{platforms[platform].label} · Nível {data.summoner.summonerLevel}</p><h1>{data.account.gameName}<span>#{data.account.tagLine}</span></h1></div>

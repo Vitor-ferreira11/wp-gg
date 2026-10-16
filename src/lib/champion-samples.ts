@@ -4,6 +4,7 @@ import { mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import type { Match } from './types';
 import type { ChampionSample } from './champion-stats';
+import { persistenceEnabled } from './persistence';
 
 function database() {
   const path = process.env.WP_DATABASE_PATH || resolve(process.cwd(), '.data/wp-gg.sqlite');
@@ -13,6 +14,7 @@ function database() {
   return db;
 }
 export function captureChampionSamples(matches: Match[]) {
+  if (!persistenceEnabled()) return;
   let db: DatabaseSync | undefined;
   try {
     db = database();
@@ -29,7 +31,8 @@ export function captureChampionSamples(matches: Match[]) {
   } catch { /* A coleta não impede a consulta do perfil. */ }
   finally { db?.close(); }
 }
-export function readChampionSamples(): { samples: ChampionSample[]; unavailable: boolean } {
+export function readChampionSamples(): { samples: ChampionSample[]; unavailable: boolean; disabled?: boolean } {
+  if (!persistenceEnabled()) return { samples: [], unavailable: false, disabled: true };
   let db: DatabaseSync | undefined;
   try {
     db = database();

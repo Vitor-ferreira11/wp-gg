@@ -1,4 +1,5 @@
 import 'server-only';
+import { demoOnly } from './public-mode';
 import { captureRankHistory } from './rank-history';
 import { captureChampionSamples } from './champion-samples';
 import { platforms, type Platform, parseRiotId } from './stats';
@@ -8,6 +9,7 @@ export class RiotError extends Error {
   constructor(public status: number, message: string, public retryAfter?: number) { super(message); }
 }
 async function riot<T>(host: string, path: string, ttl = 120): Promise<T> {
+  if (demoOnly()) throw new RiotError(503, 'Esta versão pública utiliza somente dados fictícios. Explore o perfil de demonstração.');
   const key = process.env.RIOT_API_KEY;
   if (!key) throw new RiotError(503, 'Configure RIOT_API_KEY no arquivo .env.local e reinicie o servidor para consultar dados reais.');
   let response: Response;

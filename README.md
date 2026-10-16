@@ -132,7 +132,27 @@ Referências: [Riot API](https://developer.riotgames.com/apis), [Roteamento e Da
 
 
 
-## Modo de demonstração
+## Publicação inicial: demonstração pública
+
+Configure `WP_DEMO_ONLY=true` para testar localmente a versão de portfólio. Na Vercel (`VERCEL=1`), esta versão sempre ativa o modo demonstrativo, mesmo com `WP_DEMO_ONLY=false`. Não configure nem envie `RIOT_API_KEY` nessa publicação. A chave local existente pode permanecer em `.env.local`, ignorado pelo Git.
+
+O modo público substitui a busca por um acesso à demonstração, usa o perfil fictício na página inicial, remove o atalho de conta real do menu, bloqueia rotas de perfil real com uma mensagem explicativa e impede chamadas à Riot API no cliente server-side, mesmo se houver chave. Também desativa a persistência SQLite. Data Dragon continua sendo consultado para imagens e catálogo estático.
+
+Para publicar na Vercel Hobby: importe o repositório, mantenha o framework Next.js, use Node.js 24, instalação `pnpm install --frozen-lockfile` e build `pnpm build`. Não configure `WP_BUILD_DIR`, pois a saída normal é `.next`. Não envie `.env.local` nem arquivos SQLite. Em outro provedor, defina explicitamente `WP_DEMO_ONLY=true`. Mudanças de modo exigem reinício local ou novo build/deploy na hospedagem, pois a página inicial pode ser pré-renderizada.
+
+Não foi realizado deploy nesta etapa. Consultas reais públicas permanecem uma etapa futura: aprovação apropriada da Riot, controle compartilhado de requisições e revisão deliberada do bloqueio na Vercel.
+
+## Configuração da persistência
+
+No computador local, o SQLite continua ativo por padrão, preservando a coleta e os registros existentes. Para testar sem banco, configure `WP_PERSISTENCE=disabled` em `.env.local` e reinicie o servidor. Essa opção impede leitura, criação de diretórios e gravação do SQLite. Ela não apaga bancos existentes.
+
+Na Vercel (`VERCEL=1`), o SQLite local é sempre desativado, mesmo que `WP_PERSISTENCE` tenha outro valor. `WP_DATABASE_PATH` não reativa o banco. A aplicação continua exigindo runtime Node.js; isso não transforma o projeto em exportação estática.
+
+Sem persistência, busca, perfil, classificação, últimas partidas, gráfico, campeões mais jogados e relacionamentos do perfil continuam calculados em memória a partir da Riot API. O modo `/demo` continua independente de chave. O catálogo Data Dragon, habilidades e skins permanecem disponíveis, enquanto as análises acumuladas de campeões mostram que o armazenamento foi desativado. Consultar novos perfis não gera coleta nesse modo.
+
+Esta configuração prepara a persistência para ambientes sem disco durável. O modo público descrito acima é uma configuração separada que também desativa o SQLite. Nenhuma dessas opções publica o site ou resolve o controle global de requisições e a aprovação da chave Riot para futuras consultas públicas.
+
+## Utilizar a demonstração
 
 Abra `/demo` ou clique em **Demonstração** no menu. O perfil **WePlay Demo#DEMO** contém 20 partidas fictícias fixas, distribuídas entre Solo/Duo, Flex e ARAM. Filtros, gráfico, campeões mais jogados, aliados/adversários e detalhes das equipes usam os mesmos componentes do perfil real.
 
